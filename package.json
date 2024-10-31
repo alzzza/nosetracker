@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "react": "19.0.0-rc-69d4b800-20241021",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "next": "15.0.1"
   },
