@@ -14,7 +14,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await account.createEmailSession(email, password);
+      await account.createSession(email, password);
       onSuccess?.();
     } catch (err) {
       setError('Login failed. Please check your credentials.');
