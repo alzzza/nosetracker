@@ -27,7 +27,7 @@ export default function RegisterPage() {
     try {
       await account.create('unique()', email, password);
       // Automatically log in after successful registration
-      await account.createEmailSession(email, password);
+      await account.createSession(email, password);
       router.push('/dashboard');
     } catch (err) {
       setError('Registration failed. Please try again.');
