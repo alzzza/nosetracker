@@ -14,12 +14,19 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await account.createSession(email, password);
-      router.push('/dashboard');
-    } catch (err) {
-      setError('Invalid credentials. Please try again.');
+      const session = await account.createSession(email, password);
+      console.log('Session created:', session);
+      onSuccess?.();
+    } catch (error: any) {
+      console.error('Login error details:', error);
+      if (error.code) {
+        console.log('Error code:', error.code);
+        console.log('Error message:', error.message);
+      }
+      setError('Login failed: ' + error.message);
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
