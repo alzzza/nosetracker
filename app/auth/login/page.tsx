@@ -13,19 +13,38 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(''); // Clear any previous errors
+    
     try {
-      const session = await account.createSession(email, password);
-      console.log('Session created:', session);
+      // Log attempt
+      console.log('Attempting login with email:', email);
+      
+      const session = await account.createEmailPasswordSession(email, password);
+      
+      console.log('Session created successfully:', session);
+      
+      // Getting the account details
+      const accountDetails = await account.get();
+      console.log('Account details:', accountDetails);
+      
+      router.push('/dashboard');
+      
     } catch (error: any) {
-      console.error('Login error details:', error);
-      if (error.code) {
-        console.log('Error code:', error.code);
-        console.log('Error message:', error.message);
+      console.error('Full error object:', error);
+      
+      // More detailed error handling
+      let errorMessage = 'Login failed: ';
+      if (error.type) {
+        errorMessage += `Type: ${error.type} - `;
       }
-      setError('Login failed: ' + error.message);
+      if (error.code) {
+        errorMessage += `Code: ${error.code} - `;
+      }
+      errorMessage += error.message || 'Unknown error occurred';
+      
+      setError(errorMessage);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -49,7 +68,7 @@ export default function LoginPage() {
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.trim())} // Added trim()
             />
           </div>
           <div>
