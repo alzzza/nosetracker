@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 'use client'
 
 import { useState } from 'react'
@@ -17,7 +16,7 @@ export function Navbar() {
   ]
 
   return (
-    <nav className="bg-white border-b border-gray-200" role="navigation" aria-label="Main navigation" [[1]]{/* Ensuring accessibility */}>
+    <nav className="bg-white border-b border-gray-200" role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo/Brand */}
@@ -39,7 +38,7 @@ export function Navbar() {
                     ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-600 hover:bg-gray-50'
                 )}
-                aria-current={pathname === item.href ? 'page' : undefined} [[6]]
+                aria-current={pathname === item.href ? 'page' : undefined}
               >
                 {item.name}
               </Link>
