@@ -1,6 +1,5 @@
 'use client';
 
-import { Client, Account, ID } from 'appwrite';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -11,21 +10,6 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-
-  const createUser = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    await account.create(
-      ID.unique(),
-      email,
-      password
-    );
-    await account.createSession(email, password);
-  } catch (error) {
-    console.error('User creation error:', error);
-    setError(error?.message || 'Registration failed');
-  }
-};
 
   const validateEmail = (email: string) => {
     const validDomains = ['@nhs.net', '@*.nhs.uk'];
@@ -38,6 +22,15 @@ export default function RegisterPage() {
     if (!validateEmail(email)) {
       setError('Invalid email domain. Please use an authorized email address.');
       return;
+    }
+
+    try {
+      await account.create('unique()', email, password);
+      // Automatically log in after successful registration
+      await account.createSession(email, password);
+      router.push('/dashboard');
+    } catch (err) {
+      setError('Registration failed. Please try again.');
     }
   };
 
