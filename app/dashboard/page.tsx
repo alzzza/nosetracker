@@ -1,7 +1,8 @@
 import EventsTable from '@/components/EventsTable';
+import { Event } from '@/types'; // Import your Event type
 
 export default function DashboardPage() {
-  const events = [];
+  const events: Event[] = [];
 
   return (
     <div className="p-4">
