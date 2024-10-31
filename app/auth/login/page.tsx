@@ -16,7 +16,6 @@ export default function LoginPage() {
     try {
       const session = await account.createSession(email, password);
       console.log('Session created:', session);
-      onSuccess?.();
     } catch (error: any) {
       console.error('Login error details:', error);
       if (error.code) {
