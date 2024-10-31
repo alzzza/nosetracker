@@ -15,3 +15,6 @@ export default function DashboardLayout({
     </div>
   )
 }
+
+
+export default Navbar
