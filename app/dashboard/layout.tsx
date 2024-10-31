@@ -1,19 +1,11 @@
 // app/dashboard/layout.tsx
-import { redirect } from 'next/navigation'
-import { getSession } from '@/lib/auth'
 import Navbar from '@/components/Navbar'
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getSession()
-
-  if (!session) {
-    redirect('/auth/login')
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
