@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getSession } from '@/lib/auth'
+import { useSession } from 'next-auth/react'
 
 interface AuthGuardProps {
   children: React.ReactNode
@@ -11,26 +11,18 @@ interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { data: session, status } = useSession()
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const session = await getSession()
-        
-        if (!session) {
-          router.push('/auth/login')
-          return
-        }
-        
-        setIsAuthenticated(true)
-      } catch (error) {
-        console.error('Auth check failed:', error)
-        router.push('/auth/login')
-      }
+    if (status === 'loading') return
+
+    if (!session) {
+      router.push('/auth/login')
+      return
     }
 
-    checkAuth()
-  }, [router])
+    setIsAuthenticated(true)
+  }, [session, status, router])
 
   // Show loading state while checking authentication
   if (!isAuthenticated) {
